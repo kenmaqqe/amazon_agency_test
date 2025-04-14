@@ -3,7 +3,7 @@ import { Welcome, Weather } from "./pages";
 
 function App() {
   return (
-    <section>
+    <section className="welcome">
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/weather/:cityname" element={<Weather />} />

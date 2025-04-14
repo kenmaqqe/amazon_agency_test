@@ -9,11 +9,6 @@ body {
   justify-content: center;
   align-items: center;
 }
-.welcome-msg {
-  display: flex;
-  width: 50vw;
-  justify-content: space-between;
-}
 .city-item:hover {
   cursor: pointer;
   background-color: #f5f5f5;
