@@ -1,5 +1,15 @@
+import { Route, Routes } from "react-router-dom";
+import { Welcome, Weather } from "./pages";
+
 function App() {
-  return <section>App</section>;
+  return (
+    <section>
+      <Routes>
+        <Route path="/" element={<Welcome />} />
+        <Route path="/weather/:cityname" element={<Weather />} />
+      </Routes>
+    </section>
+  );
 }
 
 export default App;
