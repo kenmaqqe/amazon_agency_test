@@ -1,17 +1,25 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getWeather } from "../../services";
 import { WeatherInterface } from "../../types";
-import Box from "@mui/material/Box";
 import { WeatherCard } from "../../components";
+import { Button, Box } from "@mui/material";
+import Back from "../../assets/back.svg";
 
 const Weather = () => {
   const { cityname } = useParams<{ cityname: string }>();
   const [currentWeather, setCurrentWeather] = useState<WeatherInterface | null>(
     null
   );
+  const navigate = useNavigate();
+  const [currentDate, setCurrentDate] = useState<Date>();
 
   useEffect(() => {
+    const cache = localStorage.getItem("weatherCache");
+    if (cache) {
+      const parsed = JSON.parse(cache);
+      setCurrentDate(new Date(parsed.timestamp));
+    }
     if (!cityname) return;
 
     const [latStr, lonStr] = cityname.split(",");
@@ -28,7 +36,36 @@ const Weather = () => {
       .catch((err) => console.log(err));
   }, [cityname]);
 
-  return <Box>{currentWeather && <WeatherCard {...currentWeather} />}</Box>;
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        minHeight: "100vh",
+        position: "relative",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Button
+        sx={{
+          color: "black",
+          position: "absolute",
+          top: 20,
+          left: 20,
+          gap: 1,
+        }}
+        onClick={() => {
+          localStorage.removeItem("weatherCache");
+          navigate("/");
+        }}
+      >
+        <img src={Back} alt="back" width={20} />
+        Back
+      </Button>
+      {currentWeather && <WeatherCard {...currentWeather} date={currentDate} />}
+    </Box>
+  );
 };
 
 export default Weather;

@@ -1,8 +1,11 @@
 import { WeatherInterface } from "../../types";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import { Box, Typography } from "@mui/material";
 
-const WeatherCard = (currentWeather: WeatherInterface) => {
+interface Props extends WeatherInterface {
+  date?: Date;
+}
+
+const WeatherCard = ({ current, location, date }: Props) => {
   return (
     <Box
       sx={{
@@ -18,29 +21,29 @@ const WeatherCard = (currentWeather: WeatherInterface) => {
         fontSize: "1.5rem",
       }}
     >
-      <Typography variant="h3">
-        {currentWeather.current.condition.text}
-      </Typography>
+      <Typography variant="h3">{current.condition.text}</Typography>
       <img
-        src={currentWeather.current.condition.icon}
-        alt={currentWeather.current.condition.text}
+        src={current.condition.icon}
+        alt={current.condition.text}
         width={200}
       />
-      <Typography variant="h4">{currentWeather.current.temp_c}°C</Typography>
+      <Typography variant="h4">{current.temp_c}°C</Typography>
       <Box
         sx={{ width: "80%", display: "flex", justifyContent: "space-between" }}
       >
         <Typography variant="h5">
-          Wind speed: {currentWeather.current.wind_kph} km/h
+          Wind speed: {current.wind_kph} km/h
         </Typography>
-        <Typography variant="h5">
-          Wind direction: {currentWeather.current.wind_dir}
-        </Typography>
+        <Typography variant="h5">Wind direction: {current.wind_dir}</Typography>
       </Box>
       <Typography variant="h4">
-        {currentWeather.location.name}, {currentWeather.location.region},{" "}
-        {currentWeather.location.country}
+        {location.name}, {location.region}, {location.country}
       </Typography>
+      {date && (
+        <Typography variant="h6">
+          Last update at: {date.toLocaleString()}
+        </Typography>
+      )}
     </Box>
   );
 };

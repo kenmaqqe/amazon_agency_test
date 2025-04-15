@@ -1,10 +1,6 @@
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import { useState, useEffect } from "react";
 import { autocomplete } from "../../services";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
+import { List, ListItem, ListItemText, TextField, Box } from "@mui/material";
 import { CityInterface } from "../../types";
 import { useNavigate } from "react-router-dom";
 
@@ -17,8 +13,14 @@ const Search = () => {
     lon: CityInterface["lon"],
     lat: CityInterface["lat"]
   ) => {
+    const payload = {
+      coords: `${lat},${lon}`,
+      timestamp: Date.now(),
+    };
+    localStorage.setItem("weatherCache", JSON.stringify(payload));
     navigate(`/weather/${lat},${lon}`);
   };
+
   const handleChangeCityName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCityName(e.target.value);
   };
@@ -29,7 +31,6 @@ const Search = () => {
     const timer = setTimeout(() => {
       autocomplete(cityName).then((res) => {
         setCities(res.data);
-        console.log(res.data);
       });
     }, 300);
 
@@ -51,16 +52,25 @@ const Search = () => {
         onChange={handleChangeCityName}
       />
       <List>
-        {cities.map((item) => {
-          return (
-            <ListItem key={item.id} className="city-item">
-              <ListItemText
-                primary={`${item.name}, ${item.region}, ${item.country}`}
-                onClick={() => handleSearch(item.lon, item.lat)}
-              />
-            </ListItem>
-          );
-        })}
+        {cities.length > 0
+          ? cities.map((item) => {
+              return (
+                <ListItem key={item.id} className="city-item">
+                  <ListItemText
+                    primary={`${item.name}, ${item.region}, ${item.country}`}
+                    onClick={() => handleSearch(item.lon, item.lat)}
+                  />
+                </ListItem>
+              );
+            })
+          : cityName.length >= 3 && (
+              <ListItem>
+                <ListItemText
+                  primary="City not found :("
+                  sx={{ textAlign: "center", color: "gray" }}
+                />
+              </ListItem>
+            )}
       </List>
     </Box>
   );

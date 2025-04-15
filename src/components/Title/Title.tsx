@@ -1,5 +1,4 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import { Typography, Box } from "@mui/material";
 import Logo from "../../assets/logo.svg";
 
 const Title = () => {
