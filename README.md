@@ -44,6 +44,7 @@ Create a `.env` file in the root directory and add your WeatherAPI key:
 
 ```env
 VITE_WEATHER_API_KEY=your_api_key_here
+VITE_API_URI = 'https://api.weatherapi.com/v1/'
 ```
 
 ---
