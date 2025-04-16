@@ -1,7 +1,13 @@
-import axiosInstance from "./axiosInstance";
+import axios from "axios";
 
 export const getWeather = async (lat: number, lon: number) => {
-  return axiosInstance.get(
-    `/current.json?key=${import.meta.env.VITE_API_KEY}&q=${lat},${lon}&aqi=no`
-  );
+  try {
+    const response = await axios.get(
+      `/current.json?key=${process.env.VITE_API_KEY}&q=${lat},${lon}&aqi=no`
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching weather data:", error);
+    throw error;
+  }
 };

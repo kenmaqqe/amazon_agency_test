@@ -4,7 +4,7 @@ import Weather from './Weather';
 import { getWeather } from '../../services';
 
 jest.mock('../../services', () => ({
-  getWeather: jest.fn()
+  getWeather: jest.fn(() => Promise.resolve({ data: mockWeatherData }))
 }));
 
 const mockNavigate = jest.fn();
