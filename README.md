@@ -28,7 +28,7 @@ A sleek React application that allows users to search for cities and view their 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/weather-search-app.git
+   git clone https://github.com/kenmaqqe/amazon_agency_test.git
    cd weather-search-app
    ```
 
